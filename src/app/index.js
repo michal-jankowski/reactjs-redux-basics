@@ -1,31 +1,52 @@
 import React from "react";
-import {render} from "react-dom";
+import { render } from "react-dom";
+import { Provider } from 'react-redux';
 
-import { User } from './components/User';
-import { Main } from './components/Main';
+import App from "./containers/App";
+import store from "./store";
 
-class App extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            username: "Max"
-        };
-    }
-
-    changeUsername(newName) {
-        this.setState({
-            username: newName
-        });
-    }
-
-    render() {
-        return (
-            <div className="container">
-                <Main changeUsername={this.changeUsername.bind(this)}/>
-                <User username={this.state.username}/>
-            </div>
-        );
-    }
+/*
+const myLogger = (store) => (next) => (action) => { // zawsze będziemy musieli zastosować taki pattern
+    console.log("Logged action", action);
+    next(action); // to musimy dodać zawsze, zeby nasze 'action' (cokolwiek to jest:p) zostało przekazane do 'reducera' (zeby nasz stan, store został zaktualizowany)
 }
+*/
 
-render(<App />, window.document.getElementById('app'));
+/*
+store.subscribe(() => {
+    // console.log("Store updated! ", store.getState());
+});
+*/
+
+// store.dispatch({
+//     type: "ADD",
+//     payload: 2
+// });
+
+// store.dispatch({
+//     type: "ADD",
+//     payload: 22
+// });
+
+// store.dispatch({
+//     type: "SUBTRACT",
+//     payload: 10
+// });
+
+// store.dispatch({
+//     type: "SET_NAME",
+//     payload: "Miki"
+// });
+
+// store.dispatch({
+//     type: "SET_AGE",
+//     payload: 31
+// });
+
+render(
+    // w ten sposób łączymy nasz 'store' z naszą aplikacją
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    window.document.getElementById('app')
+);
